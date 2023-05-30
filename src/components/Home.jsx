@@ -25,7 +25,6 @@ export default function Home() {
   if (isLoading) return <p>Loading...</p>;
   return (
     <>
-      <h1>NC News</h1>
       <section>
         <Pagination
           count={totalPages}
