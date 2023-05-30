@@ -9,3 +9,7 @@ export function getArticles(page, limit) {
     .get(`/articles?p=${page}&limit=${limit}`)
     .then((res) => res.data);
 }
+
+export function getTopics() {
+  return ncNewsApi.get("/topics").then((res) => res.data);
+}
