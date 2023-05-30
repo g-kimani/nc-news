@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { getArticle } from "../utils";
 import Button from "@mui/material/Button";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import ArticleComments from "./ArticleComments";
 
 export default function ArticlePage() {
   const { article_id } = useParams();
@@ -36,7 +35,6 @@ export default function ArticlePage() {
       <div>
         <p>{article.body}</p>
       </div>
-      <ArticleComments article_id={article_id} />
     </article>
   );
 }
