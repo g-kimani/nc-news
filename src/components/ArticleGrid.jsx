@@ -1,8 +1,10 @@
+import ArticleCard from "./ArticleCard";
+
 export default function ArticleGrid({ articles }) {
   return (
-    <section>
+    <section className="article-grid">
       {articles.map((article) => {
-        return <p key={article.article_id}>{article.title}</p>;
+        return <ArticleCard key={article.article_id} article={article} />;
       })}
     </section>
   );
