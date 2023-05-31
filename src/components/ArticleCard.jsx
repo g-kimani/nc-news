@@ -7,6 +7,7 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import ArticleVotes from "./ArticleVotes";
 
 export default function ArticleCard({ article }) {
   return (
@@ -30,10 +31,11 @@ export default function ArticleCard({ article }) {
           <ModeCommentOutlinedIcon />
           {article.comment_count}
         </Button>
-        <Button size="small">
+        {/* <Button size="small">
           <FavoriteBorderOutlinedIcon />
           {article.votes}
-        </Button>
+        </Button> */}
+        <ArticleVotes votes={article.votes} />
         <Link to={`/articles/${article.article_id}`}>
           <Button>See More...</Button>
         </Link>
