@@ -4,6 +4,7 @@ import { getArticle } from "../utils";
 import Button from "@mui/material/Button";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ArticleComments from "./ArticleComments";
+import ArticleVotes from "./ArticleVotes";
 
 export default function ArticlePage() {
   const { article_id } = useParams();
@@ -16,6 +17,11 @@ export default function ArticlePage() {
       setIsLoading(false);
     });
   }, [article_id]);
+  const handleSetVotes = (votes) => {
+    setArticle((article) => {
+      return { ...article, votes: article.votes + votes };
+    });
+  };
   if (isLoading) return <p>Loading...</p>;
   return (
     <article>
@@ -25,13 +31,13 @@ export default function ArticlePage() {
         <p>{article.author}</p>
         <p>
           {new Date(article.created_at).toDateString()}
-          <span>
-            <Button size="small">
-              <FavoriteBorderOutlinedIcon />
-              {article.votes}
-            </Button>
-          </span>
+          <span></span>
         </p>
+        <ArticleVotes
+          article_id={article_id}
+          votes={article.votes}
+          setVotes={handleSetVotes}
+        />
       </div>
       <div>
         <p>{article.body}</p>

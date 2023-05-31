@@ -34,7 +34,7 @@ export default function Home() {
           color="primary"
           variant="outlined"
         />
-        <ArticleGrid articles={articles} />
+        <ArticleGrid articles={articles} setArticles={setArticles} />
       </section>
     </>
   );

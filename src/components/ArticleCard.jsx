@@ -7,8 +7,14 @@ import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import ArticleVotes from "./ArticleVotes";
 
-export default function ArticleCard({ article }) {
+export default function ArticleCard({ article, setArticle }) {
+  const setArticleVotes = (votes) => {
+    setArticle((article) => {
+      return { ...article, votes: article.votes + votes };
+    });
+  };
   return (
     <Card sx={{ maxWidth: 345, margin: "5px" }}>
       <CardMedia
@@ -30,10 +36,11 @@ export default function ArticleCard({ article }) {
           <ModeCommentOutlinedIcon />
           {article.comment_count}
         </Button>
-        <Button size="small">
-          <FavoriteBorderOutlinedIcon />
-          {article.votes}
-        </Button>
+        <ArticleVotes
+          article_id={article.article_id}
+          votes={article.votes}
+          setVotes={setArticleVotes}
+        />
         <Link to={`/articles/${article.article_id}`}>
           <Button>See More...</Button>
         </Link>
