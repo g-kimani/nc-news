@@ -2,6 +2,18 @@
   box-sizing: border-box;
 }
 
+.heading {
+  margin: auto;
+}
+
+nav h1 {
+  margin-bottom: 0;
+}
+
+nav a {
+  text-transform: capitalize;
+}
+
 .article-grid {
   display: grid;
   grid-template-columns: auto;

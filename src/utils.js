@@ -13,3 +13,7 @@ export function getArticles(page, limit) {
 export function getArticle(article_id) {
   return ncNewsApi.get(`/articles/${article_id}`).then((res) => res.data);
 }
+
+export function getTopics() {
+  return ncNewsApi.get("/topics").then((res) => res.data);
+}
