@@ -29,3 +29,9 @@ export function postArticleComment(article_id, postReq) {
     .post(`/articles/${article_id}/comments`, postReq)
     .then((res) => res.data);
 }
+
+export function updateArticle(article_id, patchReq) {
+  return ncNewsApi
+    .patch(`/articles/${article_id}`, patchReq)
+    .then((res) => res.data);
+}
