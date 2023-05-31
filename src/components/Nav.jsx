@@ -23,11 +23,13 @@ function HideOnScroll({ children }) {
 
 export default function Nav() {
   const [topics, setTopics] = useState([]);
+  const [topicsLoading, setTopicsLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   useEffect(() => {
     getTopics().then(({ topics }) => {
       setTopics(topics);
+      setTopicsLoading(false);
     });
   }, []);
   const handleDrawerToggle = () => {
@@ -46,6 +48,7 @@ export default function Nav() {
             aria-label="open-drawer"
             edge="start"
             onClick={handleDrawerToggle}
+            sx={{ display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -57,15 +60,19 @@ export default function Nav() {
             <span>
               <h1>NC News</h1>
             </span>
-            <Stack spacing={2} direction="row">
+            <Stack spacing={2} direction="row" sx={{ marginBottom: "1em" }}>
               <Link to="/">Home</Link>
-              {topics.map((topic) => {
-                return (
-                  <Link key={topic.slug} to={`/topics/${topic.slug}`}>
-                    {topic.slug}
-                  </Link>
-                );
-              })}
+              {topicsLoading ? (
+                <span>Topics loading ...</span>
+              ) : (
+                topics.map((topic) => {
+                  return (
+                    <Link key={topic.slug} to={`/topics/${topic.slug}`}>
+                      {topic.slug}
+                    </Link>
+                  );
+                })
+              )}
             </Stack>
           </Stack>
         </Toolbar>
