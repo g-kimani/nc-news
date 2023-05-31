@@ -17,3 +17,9 @@ export function getArticle(article_id) {
 export function getTopics() {
   return ncNewsApi.get("/topics").then((res) => res.data);
 }
+
+export function getArticleComments(article_id) {
+  return ncNewsApi
+    .get(`/articles/${article_id}/comments`)
+    .then((res) => res.data);
+}
