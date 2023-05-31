@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 export default function ArticleCard({ article }) {
   return (
@@ -33,6 +34,9 @@ export default function ArticleCard({ article }) {
           <FavoriteBorderOutlinedIcon />
           {article.votes}
         </Button>
+        <Link to={`/articles/${article.article_id}`}>
+          <Button>See More...</Button>
+        </Link>
       </CardActions>
     </Card>
   );
