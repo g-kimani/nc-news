@@ -30,6 +30,9 @@ export default function Home() {
           count={totalPages}
           page={page}
           onChange={handlePageChange}
+          shape="rounded"
+          color="primary"
+          variant="outlined"
         />
         <ArticleGrid articles={articles} />
       </section>
