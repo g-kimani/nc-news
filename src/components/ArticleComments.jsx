@@ -16,9 +16,13 @@ export default function ArticleComments({ article_id }) {
   return (
     <section>
       <h4>Comments</h4>
-      {comments.map((comment) => {
-        return <CommentCard key={comment.comment_id} comment={comment} />;
-      })}
+      {comments.length === 0 ? (
+        <p>Be the first to add a comment ...</p>
+      ) : (
+        comments.map((comment) => {
+          return <CommentCard key={comment.comment_id} comment={comment} />;
+        })
+      )}
     </section>
   );
 }
