@@ -10,6 +10,12 @@ export function getArticles(page, limit) {
     .then((res) => res.data);
 }
 
+export function getArticlesByTopic(topic, page = 1, limit = 10) {
+  return ncNewsApi
+    .get(`/articles?p=${page}&limit=${limit}&topic=${topic}`)
+    .then((res) => res.data);
+}
+
 export function getArticle(article_id) {
   return ncNewsApi.get(`/articles/${article_id}`).then((res) => res.data);
 }
