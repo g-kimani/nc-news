@@ -15,7 +15,7 @@ export default function CommentForm({ article_id, addComment }) {
   const { user } = useContext(UserContext);
   const [body, setBody] = useState("");
   const [messageOpen, setMessageOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [showError, setShowError] = useState(false);
   const [error, setError] = useState(false);
   const handleSubmit = () => {
     if (body.length === 0) {
@@ -27,15 +27,11 @@ export default function CommentForm({ article_id, addComment }) {
       .then(({ comment }) => {
         addComment(comment);
         setBody("");
-        setMessage(<Alert severity="success">Comment Posted!</Alert>);
+        setShowError(false);
         setMessageOpen(true);
       })
       .catch(() => {
-        setMessage(
-          <Alert severity="error">
-            There was an error posting your comment! Try again
-          </Alert>
-        );
+        setShowError(true);
         setMessageOpen(true);
       });
   };
@@ -69,7 +65,13 @@ export default function CommentForm({ article_id, addComment }) {
         autoHideDuration={3000}
         onClose={handleMessageClose}
       >
-        {message}
+        {showError ? (
+          <Alert severity="error">
+            There was an error posting your comment! Try again
+          </Alert>
+        ) : (
+          <Alert severity="success">Comment Posted!</Alert>
+        )}
       </Snackbar>
     </>
   );
