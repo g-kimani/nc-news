@@ -4,6 +4,7 @@ import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import { Button, Collapse, Pagination } from "@mui/material";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import ShowMessage from "./ShowMessage";
 
 export default function ArticleComments({ article_id }) {
   const [comments, setComments] = useState([]);
@@ -12,6 +13,7 @@ export default function ArticleComments({ article_id }) {
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [message, setMessage] = useState({});
   useEffect(() => {
     setIsLoading(true);
     getArticleComments(article_id, page, pageLimit).then((data) => {
@@ -37,10 +39,16 @@ export default function ArticleComments({ article_id }) {
         newComments.splice(index, 1);
         return newComments;
       });
+      setMessage({ open: true, severity: "success", text: "Comment Deleted" });
     });
   };
   const handlePageChange = (event, value) => {
     setPage(value);
+  };
+  const handleCloseMessage = () => {
+    setMessage((prev) => {
+      return { ...prev, open: false };
+    });
   };
   if (isLoading) return <p>Loading comments...</p>;
   return (
@@ -85,6 +93,7 @@ export default function ArticleComments({ article_id }) {
       ) : (
         ""
       )}
+      <ShowMessage message={message} close={handleCloseMessage} />
     </section>
   );
 }
