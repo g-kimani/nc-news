@@ -11,12 +11,12 @@ export default function ArticleGrid({ topic }) {
   const [articles, setArticles] = useState([]);
   useEffect(() => {
     setIsLoading(true);
-    getArticles(page, pageLimit).then(({ articles, total_count }) => {
+    getArticles(page, pageLimit, topic).then(({ articles, total_count }) => {
       setArticles(articles);
       setTotalPages(Math.ceil(total_count / pageLimit));
       setIsLoading(false);
     });
-  }, [page]);
+  }, [page, topic]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
