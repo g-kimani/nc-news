@@ -3,11 +3,10 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import ArticleVotes from "./ArticleVotes";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 
 export default function ArticleCard({ article, setArticle }) {
   const setArticleVotes = (votes) => {

@@ -24,7 +24,7 @@ export default function ArticlePage() {
   };
   if (isLoading) return <p>Loading...</p>;
   return (
-    <article>
+    <article className="article-content">
       <div>
         <p>{article.topic}</p>
         <h2>{article.title}</h2>

@@ -1,9 +1,9 @@
-import { updateArticle } from "../utils";
+import { updateComment } from "../utils";
 import VotesController from "./VotesController";
 
-export default function ArticleVotes({ article_id, votes, setVotes }) {
+export default function CommentVotes({ comment_id, votes, setVotes }) {
   const updateVotes = (votesObj) => {
-    return updateArticle(article_id, votesObj);
+    return updateComment(comment_id, votesObj);
   };
   return (
     <VotesController
