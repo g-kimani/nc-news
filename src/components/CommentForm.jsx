@@ -7,6 +7,7 @@ import { postArticleComment } from "../utils";
 import { UserContext } from "../contexts/UserContext";
 import { Card, Stack, TextField } from "@mui/material";
 import UserAvatar from "./UserAvatar";
+import ShowMessage from "./ShowMessage";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -15,8 +16,11 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 export default function CommentForm({ article_id, addComment }) {
   const { user } = useContext(UserContext);
   const [body, setBody] = useState("");
-  const [messageOpen, setMessageOpen] = useState(false);
-  const [showError, setShowError] = useState(false);
+  const [message, setMessage] = useState({
+    open: false,
+    time: 3000,
+    text: "",
+  });
   const [error, setError] = useState(false);
   const [disablePost, setDisablePost] = useState(false);
   const handleSubmit = () => {
@@ -30,13 +34,15 @@ export default function CommentForm({ article_id, addComment }) {
       .then(({ comment }) => {
         addComment(comment);
         setBody("");
-        setShowError(false);
-        setMessageOpen(true);
+        setMessage({ open: true, text: "Comment Posted", severity: "success" });
         setDisablePost(false);
       })
       .catch(() => {
-        setShowError(true);
-        setMessageOpen(true);
+        setMessage({
+          open: true,
+          text: "There was an error posting your comment! Try again",
+          severity: "error",
+        });
         setDisablePost(false);
       });
   };
@@ -44,8 +50,9 @@ export default function CommentForm({ article_id, addComment }) {
     if (reason === "clickaway") {
       return;
     }
-
-    setMessageOpen(false);
+    setMessage((prevM) => {
+      return { ...prevM, open: false };
+    });
   };
   return (
     <>
@@ -73,19 +80,7 @@ export default function CommentForm({ article_id, addComment }) {
           </Stack>
         </Card>
       </section>
-      <Snackbar
-        open={messageOpen}
-        autoHideDuration={3000}
-        onClose={handleMessageClose}
-      >
-        {showError ? (
-          <Alert severity="error">
-            There was an error posting your comment! Try again
-          </Alert>
-        ) : (
-          <Alert severity="success">Comment Posted!</Alert>
-        )}
-      </Snackbar>
+      <ShowMessage message={message} close={handleMessageClose} />
     </>
   );
 }
