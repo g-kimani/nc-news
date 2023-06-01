@@ -21,9 +21,17 @@ nav a {
   text-align: left;
 }
 
+.article-content {
+  width: 100%;
+  margin: auto;
+}
+
 @media (min-width: 1281px) {
   .article-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .article-content {
+    width: 80%;
   }
 }
 

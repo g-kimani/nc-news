@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Box,
   Divider,
   Drawer,
@@ -14,11 +15,12 @@ import {
 } from "@mui/material";
 import List from "@mui/material/List";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/system";
 import { getTopics } from "../utils";
 import { Link } from "react-router-dom";
+import { UserContext } from "../contexts/UserContext";
 
 function HideOnScroll({ children }) {
   const trigger = useScrollTrigger();
@@ -33,6 +35,7 @@ export default function Nav() {
   const [topics, setTopics] = useState([]);
   const [topicsLoading, setTopicsLoading] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getTopics().then(({ topics }) => {
@@ -120,6 +123,12 @@ export default function Nav() {
                 )}
               </Stack>
             </Stack>
+            <Avatar
+              src={user.avatar_url}
+              imgProps={{ width: "auto" }}
+              sx={{ width: "50px", height: "50px" }}
+              title={user.username}
+            />
           </Toolbar>
         </AppBar>
       </HideOnScroll>
