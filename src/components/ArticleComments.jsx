@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticleComments } from "../utils";
+import { deleteComment, getArticleComments } from "../utils";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import { Button, Collapse, Pagination } from "@mui/material";
@@ -30,6 +30,15 @@ export default function ArticleComments({ article_id }) {
       return newComments;
     });
   };
+  const deleteArticleComment = (index, comment_id) => {
+    return deleteComment(comment_id).then(() => {
+      setComments((prevComments) => {
+        const newComments = [...prevComments];
+        newComments.splice(index, 1);
+        return newComments;
+      });
+    });
+  };
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -57,6 +66,9 @@ export default function ArticleComments({ article_id }) {
               key={comment.comment_id}
               comment={comment}
               setComment={(callback) => setArticleComment(index, callback)}
+              deleteComment={() =>
+                deleteArticleComment(index, comment.comment_id)
+              }
             />
           );
         })

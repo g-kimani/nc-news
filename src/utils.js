@@ -82,3 +82,7 @@ export function updateComment(comment_id, patchReq) {
     .patch(`/comments/${comment_id}`, patchReq)
     .then((res) => res.data);
 }
+
+export function deleteComment(comment_id) {
+  return ncNewsApi.delete(`/comments/${comment_id}`);
+}
