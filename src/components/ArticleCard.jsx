@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import ArticleVotes from "./ArticleVotes";
+import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 
 export default function ArticleCard({ article, setArticle }) {
   const setArticleVotes = (votes) => {
