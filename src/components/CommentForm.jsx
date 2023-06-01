@@ -5,7 +5,8 @@ import * as React from "react";
 import { useContext, useState } from "react";
 import { postArticleComment } from "../utils";
 import { UserContext } from "../contexts/UserContext";
-import { TextField } from "@mui/material";
+import { Card, Stack, TextField } from "@mui/material";
+import UserAvatar from "./UserAvatar";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -17,22 +18,26 @@ export default function CommentForm({ article_id, addComment }) {
   const [messageOpen, setMessageOpen] = useState(false);
   const [showError, setShowError] = useState(false);
   const [error, setError] = useState(false);
+  const [disablePost, setDisablePost] = useState(false);
   const handleSubmit = () => {
     if (body.length === 0) {
       setError(true);
       return;
     }
     const comment = { username: user.username, body };
+    setDisablePost(true);
     postArticleComment(article_id, comment)
       .then(({ comment }) => {
         addComment(comment);
         setBody("");
         setShowError(false);
         setMessageOpen(true);
+        setDisablePost(false);
       })
       .catch(() => {
         setShowError(true);
         setMessageOpen(true);
+        setDisablePost(false);
       });
   };
   const handleMessageClose = (event, reason) => {
@@ -45,20 +50,28 @@ export default function CommentForm({ article_id, addComment }) {
   return (
     <>
       <section>
-        <TextField
-          id="outlined-multiline-static"
-          label="Comment Body"
-          multiline
-          error={error}
-          rows={4}
-          value={body}
-          required
-          onChange={(event) => {
-            setBody(event.target.value);
-            setError(false);
-          }}
-        />
-        <Button onClick={handleSubmit}>Post</Button>
+        <Card sx={{ padding: "1em" }}>
+          <Stack direction="row" spacing={1} alignItems="center">
+            <UserAvatar username={user.username} />
+            <TextField
+              id="outlined-multiline-static"
+              label="Comment Body"
+              multiline
+              error={error}
+              rows={4}
+              value={body}
+              required
+              onChange={(event) => {
+                setBody(event.target.value);
+                setError(false);
+              }}
+              sx={{ width: "100%" }}
+            />
+            <Button disabled={disablePost} onClick={handleSubmit}>
+              Post
+            </Button>
+          </Stack>
+        </Card>
       </section>
       <Snackbar
         open={messageOpen}
