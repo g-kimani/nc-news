@@ -17,7 +17,7 @@ export default function TopicPage() {
   if (isLoading) return <p>Is loading topic: {topic}</p>;
   return (
     <>
-      <ArticleGrid articles={articles} />
+      <ArticleGrid articles={articles} setArticles={setArticles} />
     </>
   );
 }
