@@ -2,6 +2,7 @@ import ArticleCard from "./ArticleCard";
 import Pagination from "@mui/material/Pagination";
 import { getArticles } from "../utils";
 import { useEffect, useState } from "react";
+import { Toolbar } from "@mui/material";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ export default function ArticleGrid({ topic }) {
   return (
     <>
       <section>
+        <Toolbar sx={{ backgroundColor: "#e5f3ff" }}>Hi</Toolbar>
         <Pagination
           count={totalPages}
           page={page}
