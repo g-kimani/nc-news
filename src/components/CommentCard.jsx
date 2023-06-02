@@ -9,7 +9,7 @@ import {
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
 import UserAvatar from "./UserAvatar";
-import { formatDate } from "../utils";
+import { formatDate } from "../utils/helper";
 import CommentVotes from "./CommentVotes";
 
 export default function CommentCard({ comment, setComment }) {

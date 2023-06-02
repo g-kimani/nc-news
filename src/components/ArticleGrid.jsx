@@ -1,6 +1,6 @@
 import ArticleCard from "./ArticleCard";
 import Pagination from "@mui/material/Pagination";
-import { getArticles } from "../utils";
+import { getArticles } from "../utils/utils";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -11,6 +11,8 @@ import {
   Typography,
   Grid,
 } from "@mui/material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +53,16 @@ export default function ArticleGrid({ topic }) {
     <>
       <section>
         <Toolbar sx={{ padding: "1em" }}>
-          <Stack direction="row" spacing={2} sx={{ marginLeft: "auto" }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{
+              width: "100%",
+              padding: "1em",
+            }}
+          >
             <Stack direction="row" alignItems="center" spacing={2}>
               <Typography variant="h6">Sort by:</Typography>
               <Select value={sortBy} onChange={handleSortChange}>
@@ -62,7 +73,10 @@ export default function ArticleGrid({ topic }) {
             </Stack>
             <Stack direction="row" alignItems="center" spacing={2}>
               <Typography variant="h6">Order:</Typography>
-              <Button onClick={toggleOrder}>{order}</Button>
+              <Button variant="outlined" onClick={toggleOrder}>
+                {order}
+                {order === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+              </Button>
             </Stack>
           </Stack>
         </Toolbar>
@@ -71,8 +85,8 @@ export default function ArticleGrid({ topic }) {
           page={page}
           onChange={handlePageChange}
           shape="rounded"
-          color="primary"
           variant="outlined"
+          color="secondary"
         />
         <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
           {articles.map((article, index) => {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticleComments } from "../utils";
+import { getArticleComments } from "../utils/utils";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import { Button, Collapse, Pagination } from "@mui/material";
