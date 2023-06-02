@@ -1,5 +1,5 @@
 import { IconButton, Stack, SvgIcon, Typography } from "@mui/material";
-import { updateArticle } from "../utils";
+import { updateArticle } from "../utils/utils";
 import { useState } from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";

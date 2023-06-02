@@ -9,7 +9,8 @@ import {
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import Button from "@mui/material/Button";
 import UserAvatar from "./UserAvatar";
-import { deleteCommentById, formatDate } from "../utils";
+import { deleteCommentById } from "../utils/utils.js";
+import { formatDate } from "../utils/helper.js";
 import CommentVotes from "./CommentVotes";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
