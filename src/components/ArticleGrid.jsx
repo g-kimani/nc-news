@@ -2,6 +2,7 @@ import ArticleCard from "./ArticleCard";
 import Pagination from "@mui/material/Pagination";
 import { getArticles } from "../utils";
 import { useEffect, useState } from "react";
+import { Grid } from "@mui/material";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,19 +40,28 @@ export default function ArticleGrid({ topic }) {
           color="primary"
           variant="outlined"
         />
-        <section className="article-grid">
+        <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
           {articles.map((article, index) => {
             return (
-              <ArticleCard
-                key={article.article_id}
-                article={article}
-                setArticle={(callback) => {
-                  handleSetArticle(index, callback);
-                }}
-              />
+              <Grid
+                item
+                xs={4}
+                sm={4}
+                md={3}
+                key={index}
+                sx={{ height: "450px" }}
+              >
+                <ArticleCard
+                  key={article.article_id}
+                  article={article}
+                  setArticle={(callback) => {
+                    handleSetArticle(index, callback);
+                  }}
+                />
+              </Grid>
             );
           })}
-        </section>
+        </Grid>
       </section>
     </>
   );

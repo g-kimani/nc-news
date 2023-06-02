@@ -12,7 +12,7 @@ export default function UserAvatar({ username }) {
       setIsLoading(false);
     });
   }, []);
-  if (isLoading) return <p>Is loading...</p>;
+  if (isLoading) return <Avatar sx={{ width: "50px", height: "50px" }} />;
   return (
     <Avatar
       src={user.avatar_url}
