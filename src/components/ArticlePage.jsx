@@ -16,10 +16,12 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
+import NotFound from "./NotFound";
 
 export default function ArticlePage() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
+  const [articleMissing, setArticleMissing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function ArticlePage() {
       })
       .catch((err) => {
         console.log(err);
-        navigate("/404");
+        setArticleMissing(true);
       });
   }, [article_id]);
   const handleSetVotes = (votes) => {
@@ -39,6 +41,7 @@ export default function ArticlePage() {
       return { ...article, votes: article.votes + votes };
     });
   };
+  if (articleMissing) return <NotFound message="Article not found" />;
   if (isLoading) return <p>Loading...</p>;
   return (
     <article className="article-content">

@@ -30,7 +30,6 @@ function App() {
               path="/articles/:article_id"
               element={<ArticlePage />}
             ></Route>
-            <Route path="/404" element={<NotFound />}></Route>
           </Routes>
         </Box>
       </UserContext.Provider>

@@ -4,6 +4,7 @@ import { getArticles } from "../utils";
 import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import NotFound from "./NotFound";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,6 +13,7 @@ export default function ArticleGrid({ topic }) {
   const [totalPages, setTotalPages] = useState(1);
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
+  const [articlesMissing, setArticlesMissing] = useState(false);
   useEffect(() => {
     setIsLoading(true);
     getArticles(page, pageLimit, topic)
@@ -22,7 +24,7 @@ export default function ArticleGrid({ topic }) {
       })
       .catch((err) => {
         console.log(err);
-        navigate("/404");
+        setArticlesMissing(true);
       });
   }, [page, topic]);
   const handlePageChange = (event, value) => {
@@ -35,6 +37,7 @@ export default function ArticleGrid({ topic }) {
       return newArticles;
     });
   };
+  if (articlesMissing) return <NotFound message="Topic not found" />;
   if (isLoading) return <p>Loading...</p>;
   return (
     <>
