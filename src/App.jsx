@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import { UserContext } from "./contexts/UserContext";
 import { useState } from "react";
 import TopicPage from "./components/TopicPage";
+import AllArticles from "./components/AllArticles";
 
 function App() {
   const [user, setUser] = useState({
@@ -23,7 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path="/topics/:topic" element={<TopicPage />}></Route>
-
+            <Route path="/articles" element={<AllArticles />}></Route>
             <Route
               path="/articles/:article_id"
               element={<ArticlePage />}

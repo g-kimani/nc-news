@@ -5,6 +5,7 @@ import CommentForm from "./CommentForm";
 import { Button, Collapse, Pagination } from "@mui/material";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
 import ShowMessage from "./ShowMessage";
+import { TransitionGroup } from "react-transition-group";
 
 export default function ArticleComments({ article_id }) {
   const [comments, setComments] = useState([]);
@@ -56,7 +57,7 @@ export default function ArticleComments({ article_id }) {
   if (isLoading) return <p>Loading comments...</p>;
   return (
     <section>
-      <h4>Comments</h4>
+      <h4 id="comments">Comments</h4>
       <div className="comment-controls">
         <Button onClick={() => setShowCommentForm((a) => !a)}>
           <ModeCommentOutlinedIcon
@@ -71,16 +72,18 @@ export default function ArticleComments({ article_id }) {
       {comments.length === 0 ? (
         <p>Be the first to add a comment ...</p>
       ) : (
-        comments.map((comment, index) => {
-          return (
-            <CommentCard
-              key={comment.comment_id}
-              comment={comment}
-              setComment={(callback) => setArticleComment(index, callback)}
-              deleteComment={() => deleteArticleComment(index)}
-            />
-          );
-        })
+        <TransitionGroup>
+          {comments.map((comment, index) => {
+            return (
+              <Collapse key={comment.comment_id}>
+                <CommentCard
+                  comment={comment}
+                  setComment={(callback) => setArticleComment(index, callback)}
+                />
+              </Collapse>
+            );
+          })}
+        </TransitionGroup>
       )}
       {comments.length > 0 ? (
         <Pagination

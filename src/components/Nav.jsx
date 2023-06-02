@@ -61,6 +61,13 @@ export default function Nav() {
             </ListItemButton>
           </ListItem>
         </Link>
+        <Link to="/articles">
+          <ListItem>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <ListItemText primary={"Articles"} />
+            </ListItemButton>
+          </ListItem>
+        </Link>
         <Divider>Topics</Divider>
         {topics.map(({ slug }) => (
           <Link key={slug} to={`/topics/${slug}`}>
@@ -109,6 +116,7 @@ export default function Nav() {
                 sx={{ display: { xs: "none", sm: "block" } }}
               >
                 <Link to="/">Home</Link>
+                <Link to="/articles">Articles</Link>
                 {topicsLoading ? (
                   <span>Topics loading ...</span>
                 ) : (
