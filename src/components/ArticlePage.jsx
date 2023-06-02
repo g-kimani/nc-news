@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getArticle } from "../utils";
+import { getArticle } from "../utils/utils";
 import Button from "@mui/material/Button";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ArticleComments from "./ArticleComments";
