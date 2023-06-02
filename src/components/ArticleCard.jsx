@@ -18,21 +18,28 @@ export default function ArticleCard({ article, setArticle }) {
   return (
     <Card sx={{ maxWidth: 345, margin: "5px", height: "100%" }}>
       <Stack justifyContent="space-between" height="100%">
-        <CardMedia
-          component="img"
-          alt={article.title}
-          image={article.article_img_url}
-          title={article.title}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {article.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {new Date(article.created_at).toDateString()}
-          </Typography>
-        </CardContent>
-        <Divider></Divider>
+        <Link
+          to={`/articles/${article.article_id}`}
+          style={{ color: "inherit" }}
+        >
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              alt={article.title}
+              image={article.article_img_url}
+              title={article.title}
+            />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {article.title}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {new Date(article.created_at).toDateString()}
+              </Typography>
+            </CardContent>
+            <Divider></Divider>
+          </CardActionArea>
+        </Link>
         <CardActions>
           <Stack
             direction="row"
