@@ -2,6 +2,7 @@ import ArticleCard from "./ArticleCard";
 import Pagination from "@mui/material/Pagination";
 import { getArticles } from "../utils/utils";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   MenuItem,
@@ -20,17 +21,20 @@ export default function ArticleGrid({ topic }) {
   const [pageLimit, setPageLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [articles, setArticles] = useState([]);
+  const navigate = useNavigate();
   const [order, setOrder] = useState("desc");
   const [sortBy, setSortBy] = useState("created_at");
   useEffect(() => {
     setIsLoading(true);
-    getArticles(page, pageLimit, topic, order, sortBy).then(
-      ({ articles, total_count }) => {
+    getArticles(page, pageLimit, topic, order, sortBy)
+      .then(({ articles, total_count }) => {
         setArticles(articles);
         setTotalPages(Math.ceil(total_count / pageLimit));
         setIsLoading(false);
-      }
-    );
+      })
+      .catch((err) => {
+        navigate("/404");
+      });
   }, [page, topic, order, sortBy]);
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -48,6 +52,7 @@ export default function ArticleGrid({ topic }) {
   const handleSortChange = (event) => {
     setSortBy(event.target.value);
   };
+
   if (isLoading) return <p>Loading...</p>;
   return (
     <>

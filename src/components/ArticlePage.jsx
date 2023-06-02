@@ -14,19 +14,24 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 
 export default function ArticlePage() {
   const { article_id } = useParams();
   const [article, setArticle] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
-    getArticle(article_id).then(({ article }) => {
-      setArticle(article);
-      setIsLoading(false);
-    });
+    getArticle(article_id)
+      .then(({ article }) => {
+        setArticle(article);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        navigate("/404");
+      });
   }, [article_id]);
   const handleSetVotes = (votes) => {
     setArticle((article) => {
@@ -71,6 +76,11 @@ export default function ArticlePage() {
                 <span>By: {article.author}</span>
               </Stack>
             </Typography>
+            <ArticleVotes
+              article_id={article_id}
+              votes={article.votes}
+              setVotes={handleSetVotes}
+            />
           </Stack>
         </Box>
 
