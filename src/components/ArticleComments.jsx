@@ -79,6 +79,7 @@ export default function ArticleComments({ article_id }) {
                 <CommentCard
                   comment={comment}
                   setComment={(callback) => setArticleComment(index, callback)}
+                  deleteComment={() => deleteArticleComment(index)}
                 />
               </Collapse>
             );
