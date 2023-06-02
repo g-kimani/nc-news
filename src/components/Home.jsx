@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getArticle, getArticles, getTopics } from "../utils";
+import { getArticle, getArticles, getTopics } from "../utils/utils";
 import ArticleGrid from "./ArticleGrid";
 import Pagination from "@mui/material/Pagination";
 import "../components.css";

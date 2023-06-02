@@ -1,6 +1,6 @@
 import { Avatar } from "@mui/material";
 import { useEffect, useState } from "react";
-import { getUserInfo } from "../utils";
+import { getUserInfo } from "../utils/utils";
 
 export default function UserAvatar({ username }) {
   const [user, setUser] = useState({});

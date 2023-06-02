@@ -3,7 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import * as React from "react";
 import { useContext, useState } from "react";
-import { postArticleComment } from "../utils";
+import { postArticleComment } from "../utils/utils";
 import { UserContext } from "../contexts/UserContext";
 import { Card, Stack, TextField } from "@mui/material";
 import UserAvatar from "./UserAvatar";

@@ -18,7 +18,7 @@ import List from "@mui/material/List";
 import { useContext, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/system";
-import { getTopics } from "../utils";
+import { getTopics } from "../utils/utils";
 import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 

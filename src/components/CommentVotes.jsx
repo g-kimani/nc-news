@@ -1,4 +1,4 @@
-import { updateComment } from "../utils";
+import { updateComment } from "../utils/utils";
 import VotesController from "./VotesController";
 
 export default function CommentVotes({ comment_id, votes, setVotes }) {

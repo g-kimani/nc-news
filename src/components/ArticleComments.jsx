@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { getArticleComments } from "../utils";
+import { getArticleComments } from "../utils/utils.js";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import { Button, Collapse, Pagination } from "@mui/material";
 import ModeCommentOutlinedIcon from "@mui/icons-material/ModeCommentOutlined";
+import ShowMessage from "./ShowMessage";
 import { TransitionGroup } from "react-transition-group";
 
 export default function ArticleComments({ article_id }) {
@@ -13,6 +14,7 @@ export default function ArticleComments({ article_id }) {
   const [page, setPage] = useState(1);
   const [pageLimit, setPageLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
+  const [message, setMessage] = useState({});
   useEffect(() => {
     setIsLoading(true);
     getArticleComments(article_id, page, pageLimit).then((data) => {
@@ -31,9 +33,27 @@ export default function ArticleComments({ article_id }) {
       return newComments;
     });
   };
+  const deleteArticleComment = (index) => {
+    setComments((prevComments) => {
+      const newComments = [...prevComments];
+      newComments.splice(index, 1);
+      return newComments;
+    });
+    setMessage({
+      open: true,
+      severity: "success",
+      text: "Comment Deleted.",
+    });
+  };
   const handlePageChange = (event, value) => {
     setPage(value);
   };
+  const handleCloseMessage = () => {
+    setMessage((prev) => {
+      return { ...prev, open: false };
+    });
+  };
+
   if (isLoading) return <p>Loading comments...</p>;
   return (
     <section>
@@ -59,6 +79,7 @@ export default function ArticleComments({ article_id }) {
                 <CommentCard
                   comment={comment}
                   setComment={(callback) => setArticleComment(index, callback)}
+                  deleteComment={() => deleteArticleComment(index)}
                 />
               </Collapse>
             );
@@ -77,6 +98,7 @@ export default function ArticleComments({ article_id }) {
       ) : (
         ""
       )}
+      <ShowMessage message={message} close={handleCloseMessage} />
     </section>
   );
 }

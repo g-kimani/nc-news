@@ -1,10 +1,20 @@
 import ArticleCard from "./ArticleCard";
 import Pagination from "@mui/material/Pagination";
-import { getArticles } from "../utils";
+import { getArticles } from "../utils/utils";
 import { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NotFound from "./NotFound";
+import {
+  Button,
+  MenuItem,
+  Select,
+  Stack,
+  Toolbar,
+  Typography,
+  Grid,
+} from "@mui/material";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,9 +24,11 @@ export default function ArticleGrid({ topic }) {
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
   const [articlesMissing, setArticlesMissing] = useState(false);
+  const [order, setOrder] = useState("desc");
+  const [sortBy, setSortBy] = useState("created_at");
   useEffect(() => {
     setIsLoading(true);
-    getArticles(page, pageLimit, topic)
+    getArticles(page, pageLimit, topic, order, sortBy)
       .then(({ articles, total_count }) => {
         setArticles(articles);
         setTotalPages(Math.ceil(total_count / pageLimit));
@@ -26,7 +38,7 @@ export default function ArticleGrid({ topic }) {
         console.log(err);
         setArticlesMissing(true);
       });
-  }, [page, topic]);
+  }, [page, topic, order, sortBy]);
   const handlePageChange = (event, value) => {
     setPage(value);
   };
@@ -37,18 +49,53 @@ export default function ArticleGrid({ topic }) {
       return newArticles;
     });
   };
+  const toggleOrder = () => {
+    setOrder((prevOrder) => (prevOrder === "asc" ? "desc" : "asc"));
+  };
+  const handleSortChange = (event) => {
+    setSortBy(event.target.value);
+  };
   if (articlesMissing) return <NotFound message="Topic not found" />;
+
   if (isLoading) return <p>Loading...</p>;
   return (
     <>
       <section>
+        <Toolbar sx={{ padding: "1em" }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            justifyContent="flex-end"
+            sx={{
+              width: "100%",
+              padding: "1em",
+            }}
+          >
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="h6">Sort by:</Typography>
+              <Select value={sortBy} onChange={handleSortChange}>
+                <MenuItem value="created_at">Date</MenuItem>
+                <MenuItem value="comment_count">Comments</MenuItem>
+                <MenuItem value="votes">Votes</MenuItem>
+              </Select>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="h6">Order:</Typography>
+              <Button variant="outlined" onClick={toggleOrder}>
+                {order}
+                {order === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
+              </Button>
+            </Stack>
+          </Stack>
+        </Toolbar>
         <Pagination
           count={totalPages}
           page={page}
           onChange={handlePageChange}
           shape="rounded"
-          color="primary"
           variant="outlined"
+          color="secondary"
         />
         <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
           {articles.map((article, index) => {
