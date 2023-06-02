@@ -1,14 +1,21 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Home from "./components/Home";
 import ArticlePage from "./components/ArticlePage";
 import Nav from "./components/Nav";
 import { Box } from "@mui/material";
 import { UserContext } from "./contexts/UserContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TopicPage from "./components/TopicPage";
 import AllArticles from "./components/AllArticles";
 import NotFound from "./components/NotFound";
+
+const redirectTo404 = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate("/404");
+  }, []);
+};
 
 function App() {
   const [user, setUser] = useState({
@@ -31,6 +38,7 @@ function App() {
               element={<ArticlePage />}
             ></Route>
             <Route path="/404" element={<NotFound />}></Route>
+            <Route path="*" element={redirectTo404()}></Route>
           </Routes>
         </Box>
       </UserContext.Provider>
