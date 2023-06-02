@@ -49,7 +49,7 @@ export default function ArticleGrid({ topic }) {
                 sm={4}
                 md={3}
                 key={index}
-                sx={{ height: "450px" }}
+                sx={{ height: "450px", minWidth: "285px" }}
               >
                 <ArticleCard
                   key={article.article_id}

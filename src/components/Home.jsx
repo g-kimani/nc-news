@@ -55,7 +55,7 @@ export default function Home() {
   }, []);
   return (
     <>
-      <Stack direction={{ sm: "row" }} spacing={2}>
+      <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
         <Card sx={{ position: "relative" }}>
           <CardMedia
             component="img"
@@ -127,7 +127,11 @@ export default function Home() {
             </CardContent>
           </Card>
         </Card>
-        <Stack justifyContent="space-between" sx={{ textAlign: "left" }}>
+        <Stack
+          justifyContent="space-between"
+          sx={{ textAlign: "left" }}
+          spacing={{ xs: 2 }}
+        >
           <Card>
             <CardContent>
               <Stack direction="row" justifyContent="space-between" spacing={1}>
