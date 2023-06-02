@@ -8,6 +8,7 @@ import { UserContext } from "./contexts/UserContext";
 import { useState } from "react";
 import TopicPage from "./components/TopicPage";
 import AllArticles from "./components/AllArticles";
+import NotFound from "./components/NotFound";
 
 function App() {
   const [user, setUser] = useState({
@@ -29,6 +30,7 @@ function App() {
               path="/articles/:article_id"
               element={<ArticlePage />}
             ></Route>
+            <Route path="/404" element={<NotFound />}></Route>
           </Routes>
         </Box>
       </UserContext.Provider>

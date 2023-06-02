@@ -3,6 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import { getArticles } from "../utils";
 import { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function ArticleGrid({ topic }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -10,13 +11,19 @@ export default function ArticleGrid({ topic }) {
   const [pageLimit, setPageLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [articles, setArticles] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     setIsLoading(true);
-    getArticles(page, pageLimit, topic).then(({ articles, total_count }) => {
-      setArticles(articles);
-      setTotalPages(Math.ceil(total_count / pageLimit));
-      setIsLoading(false);
-    });
+    getArticles(page, pageLimit, topic)
+      .then(({ articles, total_count }) => {
+        setArticles(articles);
+        setTotalPages(Math.ceil(total_count / pageLimit));
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        navigate("/404");
+      });
   }, [page, topic]);
   const handlePageChange = (event, value) => {
     setPage(value);
