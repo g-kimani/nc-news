@@ -7,7 +7,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 });
 
 export default function ShowMessage({
-  message: { open, time = 3000, severity = "success", text },
+  message: { open = false, time = 3000, severity = "success", text = "" },
   close,
 }) {
   return (
