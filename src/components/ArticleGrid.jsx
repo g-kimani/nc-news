@@ -3,7 +3,6 @@ import Pagination from "@mui/material/Pagination";
 import { getArticles } from "../utils/utils";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NotFound from "./NotFound";
 import {
   Button,
   MenuItem,
@@ -23,7 +22,6 @@ export default function ArticleGrid({ topic }) {
   const [totalPages, setTotalPages] = useState(1);
   const [articles, setArticles] = useState([]);
   const navigate = useNavigate();
-  const [articlesMissing, setArticlesMissing] = useState(false);
   const [order, setOrder] = useState("desc");
   const [sortBy, setSortBy] = useState("created_at");
   useEffect(() => {
@@ -35,8 +33,7 @@ export default function ArticleGrid({ topic }) {
         setIsLoading(false);
       })
       .catch((err) => {
-        console.log(err);
-        setArticlesMissing(true);
+        navigate("/404");
       });
   }, [page, topic, order, sortBy]);
   const handlePageChange = (event, value) => {
@@ -55,7 +52,6 @@ export default function ArticleGrid({ topic }) {
   const handleSortChange = (event) => {
     setSortBy(event.target.value);
   };
-  if (articlesMissing) return <NotFound message="Topic not found" />;
 
   if (isLoading) return <p>Loading...</p>;
   return (
