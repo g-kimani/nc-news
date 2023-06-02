@@ -18,7 +18,7 @@ export default function ArticleGrid({ topic }) {
   const [pageLimit, setPageLimit] = useState(10);
   const [totalPages, setTotalPages] = useState(1);
   const [articles, setArticles] = useState([]);
-  const [order, setOrder] = useState("asc");
+  const [order, setOrder] = useState("desc");
   const [sortBy, setSortBy] = useState("created_at");
   useEffect(() => {
     setIsLoading(true);
@@ -51,22 +51,19 @@ export default function ArticleGrid({ topic }) {
     <>
       <section>
         <Toolbar sx={{ padding: "1em" }}>
-          <Stack
-            direction="row"
-            alignItems="center"
-            spacing={2}
-            sx={{ marginLeft: "auto" }}
-          >
-            <Typography variant="h6">Sort by:</Typography>
-            <Select value={sortBy} onChange={handleSortChange}>
-              <MenuItem value="created_at">Date</MenuItem>
-              <MenuItem value="comment_count">Comments</MenuItem>
-              <MenuItem value="votes">Votes</MenuItem>
-            </Select>
-          </Stack>
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Typography variant="h6">Order:</Typography>
-            <Button onClick={toggleOrder}>{order}</Button>
+          <Stack direction="row" spacing={2} sx={{ marginLeft: "auto" }}>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="h6">Sort by:</Typography>
+              <Select value={sortBy} onChange={handleSortChange}>
+                <MenuItem value="created_at">Date</MenuItem>
+                <MenuItem value="comment_count">Comments</MenuItem>
+                <MenuItem value="votes">Votes</MenuItem>
+              </Select>
+            </Stack>
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Typography variant="h6">Order:</Typography>
+              <Button onClick={toggleOrder}>{order}</Button>
+            </Stack>
           </Stack>
         </Toolbar>
         <Pagination
