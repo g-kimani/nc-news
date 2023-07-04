@@ -47,7 +47,10 @@ export default function ArticleCard({ article, setArticle }) {
             justifyContent="space-between"
           >
             <Link to={`/articles/${article.article_id}#comments`}>
-              <Button size="small">
+              <Button
+                size="small"
+                className="text-black hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300"
+              >
                 <ModeCommentOutlinedIcon sx={{ marginRight: "0.2em" }} />
                 {article.comment_count}
               </Button>
@@ -58,7 +61,9 @@ export default function ArticleCard({ article, setArticle }) {
               setVotes={setArticleVotes}
             />
             <Link to={`/articles/${article.article_id}`}>
-              <Button>More...</Button>
+              <Button className="text-black hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300">
+                More...
+              </Button>
             </Link>
           </Stack>
         </CardActions>

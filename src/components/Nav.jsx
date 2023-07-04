@@ -2,6 +2,7 @@ import {
   AppBar,
   Avatar,
   Box,
+  Button,
   Divider,
   Drawer,
   IconButton,
@@ -19,7 +20,7 @@ import { useContext, useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Stack } from "@mui/system";
 import { getTopics } from "../utils/utils";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
 function HideOnScroll({ children }) {
@@ -37,6 +38,8 @@ export default function Nav() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { user } = useContext(UserContext);
 
+  const location = useLocation();
+
   useEffect(() => {
     getTopics().then(({ topics }) => {
       setTopics(topics);
@@ -47,11 +50,21 @@ export default function Nav() {
     setDrawerOpen((prevState) => !prevState);
   };
 
+  useEffect(() => {
+    console.log(location);
+  }, [location]);
+
   const drawerContent = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        NC News
-      </Typography>
+      <div className="flex flex-shrink-0 items-center justify-center h-14 rounded mr-2 ">
+        <Link to="/">
+          <img
+            src="./nc-news-logo.ico"
+            className="w-auto h-14"
+            alt="NC News Logo"
+          />
+        </Link>
+      </div>
       <Divider />
       <List>
         <Link to="/">
@@ -89,48 +102,76 @@ export default function Nav() {
       <HideOnScroll>
         <AppBar
           component="nav"
-          sx={{ backgroundColor: "white", color: "#213547" }}
+          className="bg-charcoal"
+          // sx={{ backgroundColor: "white", color: "#213547" }}
           elevation={0}
         >
-          <Toolbar>
+          <Toolbar className="h-20 flex items-center justify-between">
             <IconButton
               aria-label="open-drawer"
               edge="start"
               onClick={handleDrawerToggle}
-              sx={{ display: { sm: "none" } }}
+              className=" sm:hidden text-white"
             >
               <MenuIcon />
             </IconButton>
-            <Stack
-              className="heading"
-              spacing={2}
-              divider={<Divider variant="middle" />}
-              mb={"1em"}
-            >
-              <span>
-                <h1>NC News</h1>
-              </span>
-              <Stack
-                spacing={2}
-                direction="row"
-                sx={{ display: { xs: "none", sm: "block" } }}
-              >
-                <Link to="/">Home</Link>
-                <Link to="/articles">Articles</Link>
-                {topicsLoading ? (
-                  <span>Topics loading ...</span>
-                ) : (
-                  topics.map((topic) => {
-                    return (
-                      <Link key={topic.slug} to={`/topics/${topic.slug}`}>
-                        {/* css text transform is bugging */}
-                        {topic.slug[0].toUpperCase() + topic.slug.substring(1)}
-                      </Link>
-                    );
-                  })
-                )}
-              </Stack>
-            </Stack>
+            <div className="flex flex-1 items-center justify-center sm:justify-start gap-4">
+              <div className="hidden sm:flex flex-shrink-0 items-center bg-gray-700 rounded mr-2 ">
+                <Link to="/">
+                  <img
+                    src="./nc-news-logo.ico"
+                    className="w-auto h-14"
+                    alt="NC News Logo"
+                  />
+                </Link>
+              </div>
+              <h1 className="text-2xl font-bold tracking-tight">NC News</h1>
+              <div className="hidden sm:flex gap-2">
+                <Link
+                  to="/"
+                  className={`${
+                    location.pathname === "/"
+                      ? "bg-gray-900"
+                      : "text-gray-300 hover:bg-yellow-theme hover:text-black"
+                  } text-white rounded-md px-3 py-2 text-sm font-medium transition-all duration-300`}
+                >
+                  Home
+                </Link>
+                <Link
+                  to="/articles"
+                  className={`${
+                    location.pathname === "/articles"
+                      ? "bg-gray-900"
+                      : "text-gray-300 hover:bg-yellow-theme hover:text-black"
+                  } text-white rounded-md px-3 py-2 text-sm font-medium transition-all duration-300`}
+                >
+                  Articles
+                </Link>
+                {topicsLoading
+                  ? [1, 2, 3].map((i) => {
+                      return (
+                        <div className="bg-gray-200 animate-pulse px-3 py-2 w-16 rounded-md transition-all duration-300"></div>
+                      );
+                    })
+                  : topics.map((topic) => {
+                      return (
+                        <Link
+                          key={topic.slug}
+                          to={`/topics/${topic.slug}`}
+                          className={`${
+                            location.pathname === `/topics/${topic.slug}`
+                              ? "bg-gray-900"
+                              : "text-gray-300 hover:bg-yellow-theme hover:text-black"
+                          } text-white rounded-md px-3 py-2 text-sm font-medium transition-all duration-300`}
+                        >
+                          {topic.slug[0].toUpperCase() +
+                            topic.slug.substring(1)}
+                        </Link>
+                      );
+                    })}
+              </div>
+            </div>
+            <div className=""></div>
             <Avatar
               src={user.avatar_url}
               imgProps={{ width: "auto" }}
