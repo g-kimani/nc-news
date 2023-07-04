@@ -53,11 +53,33 @@ export default function ArticleGrid({ topic }) {
     setSortBy(event.target.value);
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return (
+      <div className="mt-16">
+        <div className="h-14 rounded-md animate-pulse bg-gray-200 my-4"></div>
+        <div className="flex flex-wrap gap-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => {
+            return (
+              <div className="grow w-[calc((100%/4)-1rem)] min-h-[450px] rounded-md animate-pulse bg-gray-200"></div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
   return (
     <>
       <section>
-        <Toolbar sx={{ padding: "1em" }}>
+        <Toolbar className="mt-16 p-2 flex flex-wrap sm:flex-nowrap justify-between">
+          <Pagination
+            count={totalPages}
+            page={page}
+            onChange={handlePageChange}
+            shape="rounded"
+            color="secondary"
+            className="text-white shrink-0 py-2"
+            sx={{ ul: { li: { button: { backgroundColor: "white" } } } }}
+          />
           <Stack
             direction="row"
             spacing={2}
@@ -65,35 +87,42 @@ export default function ArticleGrid({ topic }) {
             justifyContent="flex-end"
             sx={{
               width: "100%",
-              padding: "1em",
             }}
           >
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack
+              direction="row"
+              alignItems="center"
+              spacing={2}
+              className="text-white"
+            >
               <Typography variant="h6">Sort by:</Typography>
-              <Select value={sortBy} onChange={handleSortChange}>
+              <Select
+                value={sortBy}
+                onChange={handleSortChange}
+                className="bg-white"
+              >
                 <MenuItem value="created_at">Date</MenuItem>
                 <MenuItem value="comment_count">Comments</MenuItem>
                 <MenuItem value="votes">Votes</MenuItem>
               </Select>
             </Stack>
             <Stack direction="row" alignItems="center" spacing={2}>
-              <Typography variant="h6">Order:</Typography>
-              <Button variant="outlined" onClick={toggleOrder}>
+              <Typography variant="h6" className="text-white">
+                Order:
+              </Typography>
+              <Button
+                variant="outlined"
+                onClick={toggleOrder}
+                className="text-white border-2 border-yellow-theme hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300"
+              >
                 {order}
                 {order === "asc" ? <ArrowUpwardIcon /> : <ArrowDownwardIcon />}
               </Button>
             </Stack>
           </Stack>
         </Toolbar>
-        <Pagination
-          count={totalPages}
-          page={page}
-          onChange={handlePageChange}
-          shape="rounded"
-          variant="outlined"
-          color="secondary"
-        />
-        <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }}>
+
+        <Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 12 }}>
           {articles.map((article, index) => {
             return (
               <Grid

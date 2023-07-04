@@ -56,10 +56,18 @@ export default function ArticleComments({ article_id }) {
 
   if (isLoading) return <p>Loading comments...</p>;
   return (
-    <section>
-      <h4 id="comments">Comments</h4>
-      <div className="comment-controls">
-        <Button onClick={() => setShowCommentForm((a) => !a)}>
+    <section className="text-white my-4">
+      <h4
+        id="comments"
+        className="text-xl font-bold tracking-tight sm:text-2xl"
+      >
+        Comments
+      </h4>
+      <div className="comment-controls my-4">
+        <Button
+          className="text-white my-2 hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300"
+          onClick={() => setShowCommentForm((a) => !a)}
+        >
           <ModeCommentOutlinedIcon
             sx={{ margin: "0 5px" }}
           ></ModeCommentOutlinedIcon>{" "}
@@ -92,8 +100,9 @@ export default function ArticleComments({ article_id }) {
           page={page}
           onChange={handlePageChange}
           shape="rounded"
-          color="primary"
-          variant="outlined"
+          color="secondary"
+          className="text-white shrink-0"
+          sx={{ ul: { li: { button: { backgroundColor: "white" } } } }}
         />
       ) : (
         ""

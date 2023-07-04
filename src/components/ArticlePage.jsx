@@ -38,61 +38,94 @@ export default function ArticlePage() {
       return { ...article, votes: article.votes + votes };
     });
   };
-  if (isLoading) return <p>Loading...</p>;
-  return (
-    <article className="article-content">
-      <Card sx={{ textAlign: "left" }}>
-        <Box sx={{ backgroundColor: "#213547", color: "#fff", padding: "1em" }}>
-          <Link
-            to={`/topics/${article.topic}`}
-            style={{
-              color: "#fff",
-              textDecoration: "underline",
-              textTransform: "capitalize",
-            }}
+  if (isLoading) {
+    return (
+      <div className="article-content mt-16">
+        <div className="w-full min-h-[560px] bg-gray-200 rounded animate-pulse"></div>
+        <div className="mt-4">
+          <h4
+            id="comments"
+            className="text-xl text-white font-bold tracking-tight sm:text-2xl"
           >
-            <Typography variant="subtitle2">{article.topic}</Typography>
-          </Link>
-          <h2>{article.title}</h2>
-          <Stack
-            direction="row"
-            divider={
-              <Divider
-                sx={{ borderColor: "white" }}
-                orientation="vertical"
-                flexItem
-                variant="middle"
-              />
-            }
-            spacing={2}
-            alignItems="center"
-          >
-            <Typography variant="subtitle1">
-              {new Date(article.created_at).toDateString()}
-            </Typography>
-            <Typography variant="subtitle2">
-              <Stack direction="row" spacing={2} alignItems="center">
-                <UserAvatar username={article.author} />
-                <span>By: {article.author}</span>
-              </Stack>
-            </Typography>
-            <ArticleVotes
-              article_id={article_id}
-              votes={article.votes}
-              setVotes={handleSetVotes}
-            />
-          </Stack>
-        </Box>
+            Comments
+          </h4>
+          {[1, 2, 3, 4, 5].map((i) => {
+            return (
+              <div className="w-full min-h-[150px] bg-gray-200 animate-pulse rounded my-2 mx-2"></div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
 
-        <CardContent>
+  return (
+    <article className="article-content mt-16">
+      <Card className="text-left ">
+        <Card className="relative ">
           <CardMedia
             component="img"
             alt={article.title}
             image={article.article_img_url}
             title={article.title}
-            sx={{ width: "80%", margin: "1em auto" }}
+            className="w-full max-h-[400px]"
           />
-          <Divider />
+          <Card
+            elevation={0}
+            className="text-black p-4 gap-2 flex flex-col sm:text-white sm:absolute sm:bottom-10 sm:left-10 sm:bg-transparent sm:backdrop-blur"
+          >
+            {/* sm:text-white sm:absolute bottom-10 text-white p-2 left-10
+            bg-transparent backdrop-blur */}
+            <Link
+              to={`/topics/${article.topic}`}
+              style={{
+                textDecoration: "underline",
+                textTransform: "capitalize",
+              }}
+              className="text-inherit"
+            >
+              <Typography
+                variant="subtitle2"
+                className="font-semibold text-base"
+              >
+                {article.topic}
+              </Typography>
+            </Link>
+            <h2 className="text-2xl font-bold tracking-tight sm:text-4xl">
+              {article.title}
+            </h2>
+            <Stack
+              direction={{ sm: "row" }}
+              divider={
+                <Divider
+                  sx={{ borderColor: "white" }}
+                  orientation={{ sm: "vertical" }}
+                  flexItem
+                  variant="middle"
+                />
+              }
+              spacing={4}
+              alignItems={{ sm: "center" }}
+            >
+              <Typography variant="subtitle1">
+                {new Date(article.created_at).toDateString()}
+              </Typography>
+              <Typography variant="subtitle2" className="my-2">
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <UserAvatar username={article.author} />
+                  <span>By: {article.author}</span>
+                </Stack>
+              </Typography>
+              <ArticleVotes
+                article_id={article_id}
+                votes={article.votes}
+                setVotes={handleSetVotes}
+              />
+            </Stack>
+          </Card>
+        </Card>
+        <CardContent>
+          <p>{Math.floor(Math.random() * 2) + 1} Minute Read</p>
           <Typography sx={{ marginTop: "2em" }} variant="body1">
             {article.body}
           </Typography>

@@ -23,6 +23,7 @@ export default function Home() {
   const [breakingNews, setBreakingNews] = useState({});
   const [topics, setTopics] = useState([]);
   const [totalArticles, setTotalArticles] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // get the topics and counts for each topic
     getTopics()
@@ -42,6 +43,9 @@ export default function Home() {
           return newTopics;
         });
         console.log(topics);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
     // get only the most recent article
     getArticles(1, 1)
@@ -53,18 +57,61 @@ export default function Home() {
         setBreakingNews(article);
       });
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="h-full mt-20 px-20 flex flex-col sm:flex-row gap-2">
+        <Card className="relative animate-pulse h-full w-full min-h-[605px] bg-gray-200 rounded shadow-md p-4"></Card>
+        <Stack
+          justifyContent="space-between"
+          sx={{ textAlign: "left" }}
+          spacing={{ xs: 2 }}
+        >
+          <Card className="animate-pulse bg-gray-200 w-full sm:min-w-[360px] min-h-[76px]"></Card>
+          <Divider className="text-white before:border-yellow-theme after:border-yellow-theme">
+            Topics
+          </Divider>
+          {[1, 2, 3].map((i) => {
+            return (
+              <Card
+                key={i}
+                className="animate-pulse bg-gray-200 w-full sm:min-w-[360px] min-h-[75px]"
+              ></Card>
+            );
+          })}
+        </Stack>
+      </div>
+    );
+  }
+
   return (
     <>
-      <Stack direction={{ sm: "row", xs: "column" }} spacing={2}>
-        <Card sx={{ position: "relative" }}>
+      <Stack
+        className="h-full mt-20 px-20"
+        direction={{ sm: "row", xs: "column" }}
+        spacing={2}
+      >
+        <Card
+          sx={{ position: "relative" }}
+          className="h-full grow max-h-[38rem] m-0.5 overflow-hidden"
+        >
           <CardMedia
             component="img"
+            loading={isLoading}
             alt={breakingNews.title}
             image={breakingNews.article_img_url}
             title={breakingNews.title}
           />
-          <Paper sx={{ position: "absolute", top: 0, left: 0 }} square>
-            <Typography variant="h5" sx={{ textTransform: "uppercase" }}>
+          <Paper
+            sx={{ position: "absolute", top: 10, left: 10 }}
+            className="bg-charcoal text-white p-2 rounded font-semibold"
+            square
+          >
+            <Typography
+              variant="h5"
+              sx={{ textTransform: "uppercase" }}
+              className="font-semibold"
+            >
               B<span style={{ fontSize: "0.7em" }}>reaking</span> N
               <span style={{ fontSize: "0.7em" }}>ews</span>
             </Typography>
@@ -74,10 +121,11 @@ export default function Home() {
               position: { sm: "absolute" },
               left: 10,
               bottom: 10,
-              height: { sm: "50%" },
+              height: { sm: "40%" },
               backgroundColor: "#fffffff0",
-              maxWidth: { sm: "75%" },
+              maxWidth: { sm: "55%" },
             }}
+            className="bg-charcoal/90 text-white rounded"
             square
           >
             <CardContent sx={{ textAlign: "left" }}>
@@ -93,7 +141,7 @@ export default function Home() {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
-                  WebkitLineClamp: "2",
+                  WebkitLineClamp: "3",
                   WebkitBoxOrient: "vertical",
                 }}
                 gutterBottom
@@ -106,7 +154,10 @@ export default function Home() {
                 justifyContent="space-between"
               >
                 <Link to={`/articles/${breakingNews.article_id}#comments`}>
-                  <Button size="small">
+                  <Button
+                    size="small"
+                    className="text-white hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300"
+                  >
                     <ModeCommentOutlinedIcon sx={{ marginRight: "0.2em" }} />
                     {breakingNews.comment_count}
                   </Button>
@@ -121,7 +172,9 @@ export default function Home() {
                   }}
                 />
                 <Link to={`/articles/${breakingNews.article_id}`}>
-                  <Button>More...</Button>
+                  <Button className="text-white hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300 font-semibold">
+                    More...
+                  </Button>
                 </Link>
               </Stack>
             </CardContent>
@@ -132,47 +185,63 @@ export default function Home() {
           sx={{ textAlign: "left" }}
           spacing={{ xs: 2 }}
         >
-          <Card>
-            <CardContent>
-              <Stack direction="row" justifyContent="space-between" spacing={1}>
-                <Typography variant="h5">See All Articles</Typography>
-                <Link to="/articles">
-                  <Button>
+          <Link to="/articles">
+            <Card>
+              <CardContent>
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  className="items-center"
+                  spacing={1}
+                >
+                  <Typography
+                    variant="h5"
+                    className="text-2xl font-bold tracking-tight text-gray-900"
+                  >
+                    See All Articles
+                  </Typography>
+                  <Button className="text-black hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300">
                     <ArticleOutlinedIcon sx={{ verticalAlign: "middle" }} />
                     {totalArticles}
                   </Button>
-                </Link>
-              </Stack>
-            </CardContent>
-          </Card>
-          <Divider>Topics</Divider>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Link>
+          <Divider className="text-white before:border-yellow-theme after:border-yellow-theme">
+            Topics
+          </Divider>
           {topics.map(({ slug, description, total_count }) => {
             return (
-              <Card key={slug}>
-                <CardContent>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    spacing={1}
-                  >
-                    <div>
-                      <Typography
-                        variant="h5"
-                        sx={{ textTransform: "capitalize" }}
-                      >
-                        {slug}
-                      </Typography>
-                      <Typography variant="subtitle2">{description}</Typography>
-                    </div>
-                    <Link to={`/topics/${slug}`}>
-                      <Button>
+              <Link to={`/topics/${slug}`}>
+                <Card key={slug}>
+                  <CardContent>
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      spacing={1}
+                      className="items-center"
+                    >
+                      <div>
+                        <Typography
+                          variant="h5"
+                          className="text-2xl font-bold tracking-tight text-gray-900"
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          {slug}
+                        </Typography>
+                        <Typography variant="subtitle2">
+                          {description}
+                        </Typography>
+                      </div>
+                      <Button className="text-black hover:text-black hover:bg-yellow-theme rounded-md transition-all duration-300">
                         <ArticleOutlinedIcon sx={{ verticalAlign: "middle" }} />
                         {total_count}
                       </Button>
-                    </Link>
-                  </Stack>
-                </CardContent>
-              </Card>
+                    </Stack>
+                  </CardContent>
+                </Card>
+              </Link>
             );
           })}
         </Stack>

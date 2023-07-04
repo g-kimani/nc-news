@@ -63,22 +63,28 @@ export default function CommentCard({ comment, setComment, deleteComment }) {
       <Card sx={{ textAlign: "left", margin: "1em" }}>
         <CardContent>
           <Stack direction="row" alignItems="center" spacing={2}>
-            <UserAvatar username={comment.author} />
+            <div className="hidden sm:block">
+              <UserAvatar username={comment.author} />
+            </div>
             <Stack spacing={2}>
               <Stack direction="row" spacing={2} alignItems="center">
+                <div className="sm:hidden">
+                  <UserAvatar username={comment.author} />
+                </div>
                 <Typography variant="subtitle1">@{comment.author}</Typography>
-                <Typography variant="subtitle2">
+                <Typography variant="subtitle2" className="hidden sm:block">
                   {formatDate(new Date(comment.created_at))}
                 </Typography>
               </Stack>
               <Divider variant="middle" />
               <Typography variant="body1">{comment.body}</Typography>
-              <Stack direction="row" spacing={2}>
+              <Stack direction="row" spacing={2} alignItems="center">
                 <CommentVotes
                   comment_id={comment.comment_id}
                   votes={comment.votes}
                   setVotes={setCommentVotes}
                 />
+
                 <Button
                   disabled={disableDelete}
                   onClick={handleDelete}
@@ -91,6 +97,9 @@ export default function CommentCard({ comment, setComment, deleteComment }) {
                     sx={{ color: disableDelete ? "grey" : "red" }}
                   />
                 </Button>
+                <Typography variant="subtitle2" className="sm:hidden">
+                  {formatDate(new Date(comment.created_at))}
+                </Typography>
               </Stack>
             </Stack>
           </Stack>
