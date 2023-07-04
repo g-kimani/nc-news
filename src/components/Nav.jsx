@@ -150,7 +150,10 @@ export default function Nav() {
                 {topicsLoading
                   ? [1, 2, 3].map((i) => {
                       return (
-                        <div className="bg-gray-200 animate-pulse px-3 py-2 w-16 rounded-md transition-all duration-300"></div>
+                        <div
+                          key={i}
+                          className="bg-gray-200 animate-pulse px-3 py-2 w-16 rounded-md transition-all duration-300"
+                        ></div>
                       );
                     })
                   : topics.map((topic) => {

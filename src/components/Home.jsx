@@ -60,7 +60,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="h-full mt-20 px-20 flex flex-col sm:flex-row gap-2">
+      <div className="h-full mt-20  sm:px-20 flex flex-col sm:flex-row gap-2">
         <Card className="relative animate-pulse h-full w-full min-h-[605px] bg-gray-200 rounded shadow-md p-4"></Card>
         <Stack
           justifyContent="space-between"
@@ -87,7 +87,7 @@ export default function Home() {
   return (
     <>
       <Stack
-        className="h-full mt-20 px-20"
+        className="h-full mt-20 sm:px-20"
         direction={{ sm: "row", xs: "column" }}
         spacing={2}
       >
