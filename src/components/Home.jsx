@@ -60,7 +60,7 @@ export default function Home() {
 
   if (isLoading) {
     return (
-      <div className="h-full mt-20 px-20 flex flex-col sm:flex-row gap-2">
+      <div className="h-full mt-20  sm:px-20 flex flex-col sm:flex-row gap-2">
         <Card className="relative animate-pulse h-full w-full min-h-[605px] bg-gray-200 rounded shadow-md p-4"></Card>
         <Stack
           justifyContent="space-between"
@@ -87,7 +87,7 @@ export default function Home() {
   return (
     <>
       <Stack
-        className="h-full mt-20 px-20"
+        className="h-full mt-20 sm:px-20"
         direction={{ sm: "row", xs: "column" }}
         spacing={2}
       >
@@ -97,7 +97,6 @@ export default function Home() {
         >
           <CardMedia
             component="img"
-            loading={isLoading}
             alt={breakingNews.title}
             image={breakingNews.article_img_url}
             title={breakingNews.title}
@@ -211,9 +210,9 @@ export default function Home() {
           <Divider className="text-white before:border-yellow-theme after:border-yellow-theme">
             Topics
           </Divider>
-          {topics.map(({ slug, description, total_count }) => {
+          {topics.map(({ slug, description, total_count }, index) => {
             return (
-              <Link to={`/topics/${slug}`}>
+              <Link to={`/topics/${slug}`} key={index}>
                 <Card key={slug}>
                   <CardContent>
                     <Stack

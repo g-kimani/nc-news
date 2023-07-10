@@ -60,7 +60,7 @@ export default function ArticleGrid({ topic }) {
         <div className="flex flex-wrap gap-4">
           {[1, 2, 3, 4, 5, 6].map((i) => {
             return (
-              <div className="grow w-[calc((100%/4)-1rem)] min-h-[450px] rounded-md animate-pulse bg-gray-200"></div>
+              <div className="grow w-full sm:w-[calc((100%/4)-1rem)] min-h-[450px] rounded-md animate-pulse bg-gray-200"></div>
             );
           })}
         </div>
