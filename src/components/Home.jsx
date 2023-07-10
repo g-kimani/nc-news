@@ -97,7 +97,6 @@ export default function Home() {
         >
           <CardMedia
             component="img"
-            loading={isLoading}
             alt={breakingNews.title}
             image={breakingNews.article_img_url}
             title={breakingNews.title}
@@ -211,9 +210,9 @@ export default function Home() {
           <Divider className="text-white before:border-yellow-theme after:border-yellow-theme">
             Topics
           </Divider>
-          {topics.map(({ slug, description, total_count }) => {
+          {topics.map(({ slug, description, total_count }, index) => {
             return (
-              <Link to={`/topics/${slug}`}>
+              <Link to={`/topics/${slug}`} key={index}>
                 <Card key={slug}>
                   <CardContent>
                     <Stack
